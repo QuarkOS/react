@@ -8,6 +8,7 @@
 import * as t from '@babel/types';
 import {createHmac} from 'crypto';
 import {
+  promoteUsedTemporaries,
   pruneHoistedContexts,
   pruneUnusedLValues,
   pruneUnusedLabels,
@@ -311,6 +312,7 @@ export function codegenFunction(
     const reactiveFunction = buildReactiveFunction(outlinedFunction);
     pruneUnusedLabels(reactiveFunction);
     pruneUnusedLValues(reactiveFunction);
+    promoteUsedTemporaries(reactiveFunction);
     pruneHoistedContexts(reactiveFunction);
 
     const identifiers = renameVariables(reactiveFunction);
